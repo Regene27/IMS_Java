@@ -1,99 +1,33 @@
 package InventoryManagementSystem.IMS_src;
 
-import javax.swing.*;
-import javax.swing.text.FieldView;
+import java.util.Scanner;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.FieldPosition;
-import java.text.Format.Field;
-import java.util.HashMap;
-import java.util.Map;
-
-public class UserAuth extends JFrame implements ActionListener {
-    private Map<String, String> authorizedUsers;
-    private JLabel usernameLabel, passwordLabel, messageLabel;
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JButton loginButton;
+public class UserAuth {
 
     public UserAuth() {
-        authorizedUsers = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("authorized_users.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(":");
-                authorizedUsers.put(parts[0], parts[1]);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        setTitle("Inventory Management System");
-        setSize(720, 480);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        Scanner scanner = new Scanner(System.in);
 
-        JPanel panel = new JPanel();
-        Font labelFont = new Font("Arial", Font.PLAIN, 30);
+        Admin admin = new Admin("admin", "12345678", "admin", "admin");
+        User user = new User("user", "12345678", "User");
 
-        panel.setLayout(new GridLayout(3, 2));
+        System.out.print("Username: ");
+        String username = scanner.nextLine();
 
-        usernameLabel = new JLabel("Username:");
-        passwordLabel = new JLabel("Password:");
-        messageLabel = new JLabel("");
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
 
-        usernameField = new JTextField();
-        passwordField = new JPasswordField();
-
-        loginButton = new JButton("Login");
-        loginButton.addActionListener(this);
-
-        usernameLabel.setFont(labelFont);
-        usernameField.setFont(labelFont);
-
-        passwordLabel.setFont(labelFont);
-        passwordField.setFont(labelFont);
-
-        messageLabel.setFont(labelFont);
-        loginButton.setFont(labelFont);
-
-        panel.add(usernameLabel);
-        panel.add(usernameField);
-        panel.add(passwordLabel);
-        panel.add(passwordField);
-        panel.add(messageLabel);
-        panel.add(loginButton);
-
-        add(panel);
-        setVisible(true);
-    }
-
-    public boolean isAuthorized(String username, String password) {
-        String authorizedPassword = authorizedUsers.get(username);
-        if (authorizedPassword != null && authorizedPassword.equals(password)) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String username = usernameField.getText();
-        String password = new String(passwordField.getPassword());
-
-        if (isAuthorized(username, password)) {
-            messageLabel.setText("Login successful!");
+        if (username.equals(admin.username) && password.equals(admin.password)) {
+            System.out.println("Welcome, " + admin.getName() + "!");
+            CurrentUser.setCurrentUser(admin);
+        } else if (username.equals(user.username) && password.equals(user.password)) {
+            System.out.println("Welcome, " + user.getName() + "!");
+            CurrentUser.setCurrentUser(user);
         } else {
-            messageLabel.setText("Invalid username or password. Please try again.");
+            System.out.println("Invalid username or password.");
+            System.exit(0);
         }
-    }
 
-    public static void main(String[] args) {
-        new UserAuth();
+        scanner.close();
     }
 }

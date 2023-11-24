@@ -152,20 +152,45 @@ public class InventoryManagement {
         }
     }
 
+    private static User getCurrentUser() {
+        return CurrentUser.getCurrentUser();
+    }
+
+    private static void setCurrentUser(User user) {
+        CurrentUser.setCurrentUser(user);
+    }
+
+    private static void clearCurrentUser() {
+        CurrentUser.clearCurrentUser();
+    }
+
+    public static void displayMenu() {
+        System.out.println("=".repeat(100));
+        System.out.println("Sale Order Management System");
+        System.out.println("1. List Products");
+        System.out.println("2. Add Product");
+        System.out.println("3. Remove Product");
+        System.out.println("4. Add Stock");
+        System.out.println("5. View Removed Products Report");
+        System.out.println("6. Remove User");
+        System.out.println("7. Exit");
+        System.out.print("Enter your choice: ");
+    }
+
     public static void main(String[] args) {
+
+        User user1 = new User("user1", "12345678", "User");
+        User user2 = new User("user2", "12345678", "User");
+        User admin = new User("admin", "12345678", "admin", "admin");
+
+        new UserAuth();
         int choice = 0;
+
         InventoryManagement system = new InventoryManagement();
         Scanner scanner = new Scanner(System.in);
 
         do {
-            System.out.println("Sale Order Management System");
-            System.out.println("1. List Products");
-            System.out.println("2. Add Product");
-            System.out.println("3. Remove Product");
-            System.out.println("4. Add Stock");
-            System.out.println("5. View Removed Products Report");
-            System.out.println("6. Exit");
-            System.out.print("Enter your choice: ");
+            displayMenu();
 
             if (scanner.hasNextInt()) {
                 choice = scanner.nextInt();
@@ -206,6 +231,11 @@ public class InventoryManagement {
                         break;
                     case 6:
                         clearConsole();
+                        Admin.removeUser();
+                        System.out.println("=".repeat(100));
+                        break;
+                    case 7:
+                        clearConsole();
                         System.out.println("Exiting the Sale Order Management System.");
                         System.out.println("=".repeat(100));
                         scanner.close();
@@ -221,6 +251,8 @@ public class InventoryManagement {
                 System.out.println("=".repeat(100));
             }
 
-        } while (choice >= 1 && choice <= 6);
+        } while (choice >= 1 && choice <= 7);
+
+        scanner.close();
     }
 }
