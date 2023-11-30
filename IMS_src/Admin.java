@@ -1,19 +1,22 @@
-package InventoryManagementSystem.IMS_src;
+package IMS_src;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Admin extends User {
-
-    protected static List<Admin> admins = new ArrayList<>();
+    protected String role;
 
     public String getName() {
         return name;
     }
 
-    public Admin(String username, String password, String name, String role) {
+    public Admin(String username, String password, String name) {
         super(username, password, name, "admin");
         admins.add(this);
+    }
+
+    public String getRole() {
+        return "admin";
     }
 
     public void editUserInfo(String username, String password, String name, String role) {
@@ -24,16 +27,17 @@ public class Admin extends User {
     }
 
     public static void removeUser() {
-        // if (!isAdmin()) {
-        // System.out.println("You do not have permission to remove a user.");
+
+        // if (user.getRole().equals("base_user")) {
+        // System.out.println("You cannot remove users.");
         // return;
         // }
 
-        User.displayUsers();
+        BaseUser.displayUsers();
         System.out.print("Enter the username of the user you want to remove: ");
 
         String username = System.console().readLine();
-        User user = User.findUser(username);
+        User user = BaseUser.findUser(username);
         if (user == null) {
             System.out.println("User not found");
             return;
@@ -41,7 +45,7 @@ public class Admin extends User {
             System.out.println("You cannot remove an admin");
             return;
         } else {
-            User.remove(user);
+            BaseUser.remove(user);
             System.out.println("User removed successfully");
         }
     }

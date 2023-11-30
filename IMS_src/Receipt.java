@@ -1,4 +1,4 @@
-package InventoryManagementSystem.IMS_src;
+package IMS_src;
 
 import java.util.ArrayList;
 

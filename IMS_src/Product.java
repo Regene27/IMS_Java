@@ -1,6 +1,6 @@
-package InventoryManagementSystem.IMS_src;
+package IMS_src;
 
-class Product {
+public class Product {
     private String name;
     private double price;
     private int quantity;

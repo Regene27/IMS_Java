@@ -1,4 +1,4 @@
-package InventoryManagementSystem.IMS_src;
+package IMS_src;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

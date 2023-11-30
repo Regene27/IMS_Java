@@ -1,4 +1,4 @@
-package InventoryManagementSystem.IMS_src;
+package IMS_src;
 
 import java.io.*;
 import java.util.*;
@@ -152,18 +152,6 @@ public class InventoryManagement {
         }
     }
 
-    private static User getCurrentUser() {
-        return CurrentUser.getCurrentUser();
-    }
-
-    private static void setCurrentUser(User user) {
-        CurrentUser.setCurrentUser(user);
-    }
-
-    private static void clearCurrentUser() {
-        CurrentUser.clearCurrentUser();
-    }
-
     public static void displayMenu() {
         System.out.println("=".repeat(100));
         System.out.println("Sale Order Management System");
@@ -179,9 +167,9 @@ public class InventoryManagement {
 
     public static void main(String[] args) {
 
-        User user1 = new User("user1", "12345678", "User");
-        User user2 = new User("user2", "12345678", "User");
-        User admin = new User("admin", "12345678", "admin", "admin");
+        User user1 = new BaseUser("user1", "12345678", "User");
+        User user2 = new BaseUser("user2", "12345678", "User");
+        User admin = new Admin("admin", "12345678", "admin");
 
         new UserAuth();
         int choice = 0;
