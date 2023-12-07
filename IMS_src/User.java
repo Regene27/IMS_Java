@@ -8,6 +8,8 @@ public abstract class User {
     protected String password;
     protected String name;
 
+    protected static User currentUser;
+
     protected static List<User> users = new ArrayList<>();
     protected static List<Admin> admins = new ArrayList<>();
 
@@ -20,6 +22,33 @@ public abstract class User {
     public abstract String getName();
 
     public abstract String getRole();
+
+    public abstract String getUsername();
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(User user) {
+        currentUser = user;
+    }
+
+    public static void clearCurrentUser() {
+        currentUser = null;
+    }
+
 }
 
 // protected static boolean isAdmin() {

@@ -171,7 +171,7 @@ public class InventoryManagement {
         User user2 = new BaseUser("user2", "12345678", "User");
         User admin = new Admin("admin", "12345678", "admin");
 
-        new UserAuth();
+        new UserLogin();
         int choice = 0;
 
         InventoryManagement system = new InventoryManagement();

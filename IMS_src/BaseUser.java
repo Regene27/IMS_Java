@@ -2,6 +2,7 @@ package IMS_src;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class BaseUser extends User {
     protected String role;
@@ -19,7 +20,11 @@ public class BaseUser extends User {
     }
 
     public String getRole() {
-        return role;
+        return "base_user";
+    }
+
+    public String getUsername() {
+        return super.username;
     }
 
     public static void remove(User user) {
@@ -44,4 +49,5 @@ public class BaseUser extends User {
             System.out.println((i + 1) + ". Username: " + user.username);
         }
     }
+
 }

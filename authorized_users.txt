@@ -1,5 +1,5 @@
 admin:12345678:admin:admin
-user1:12345678:ben:base_user
+user1:12345678:ken:base_user
 user2:12345678:james:base_user
 user3:12345678:Jack:base_user
 user4:12345678:Jill:base_user

@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserAuth {
+public class UserLogin {
 
     public static List<User> getUserList() {
         List<User> userList = new ArrayList<>();
@@ -29,10 +31,10 @@ public class UserAuth {
 
                 if (!"base_user".equals(role)) {
                     continue;
+                } else {
+                    BaseUser baseUser = new BaseUser(username, password, name);
+                    userList.add(baseUser);
                 }
-
-                User user = new BaseUser(username, password, name);
-                userList.add(user);
             }
 
             scanner.close();
@@ -61,10 +63,10 @@ public class UserAuth {
 
                 if (!"admin".equals(role)) {
                     continue;
+                } else {
+                    Admin admin = new Admin(username, password, name);
+                    adminList.add(admin);
                 }
-
-                Admin admin = new Admin(username, password, name);
-                adminList.add(admin);
             }
 
             scanner.close();
@@ -75,7 +77,7 @@ public class UserAuth {
         return adminList;
     }
 
-    public UserAuth() {
+    public UserLogin() {
         Scanner scanner = new Scanner(System.in);
 
         List<User> userList = getUserList();
@@ -93,6 +95,7 @@ public class UserAuth {
             if (username.equals(user.username) && password.equals(user.password)) {
                 System.out.println("Welcome, " + user.getName() + "!");
                 found = true;
+                User.setCurrentUser(user);
                 break;
             }
         }
@@ -102,6 +105,7 @@ public class UserAuth {
                 if (username.equals(admin.username) && password.equals(admin.password)) {
                     System.out.println("Welcome, " + admin.getName() + "!");
                     found = true;
+                    User.setCurrentUser(admin);
                     break;
                 }
             }
@@ -112,6 +116,78 @@ public class UserAuth {
             System.exit(0);
         }
 
+        editCurrentUserInfo();
+
         scanner.close();
+    }
+
+    public void editCurrentUserInfo() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("New username: ");
+        String newUsername = scanner.nextLine();
+
+        System.out.print("New password: ");
+        String newPassword = scanner.nextLine();
+
+        System.out.print("New name: ");
+        String newName = scanner.nextLine();
+
+        if (User.currentUser.getRole().equals("admin")) {
+            System.out.print("Can't edit admin info.");
+
+            scanner.close();
+            return;
+        } else {
+            BaseUser baseUser = (BaseUser) User.currentUser;
+            baseUser.setUsername(newUsername);
+            baseUser.setPassword(newPassword);
+            baseUser.setName(newName);
+        }
+
+        try {
+            File file = new File("authorized_users.txt");
+            List<String> lines = new ArrayList<>();
+
+            Scanner scannerFile = new Scanner(file);
+            while (scannerFile.hasNextLine()) {
+                String line = scannerFile.nextLine();
+                String[] parts = line.split(":");
+
+                if (parts[0].equals(User.currentUser.getUsername())) {
+                    line = newUsername + ":" + newPassword + ":" + newName + ":" + parts[3];
+                }
+
+                lines.add(line);
+            }
+            scannerFile.close();
+
+            FileWriter writer = new FileWriter(file);
+            for (String line : lines) {
+                writer.write(line + "\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("User info updated successfully.");
+
+        scanner.close();
+    }
+
+    public void deleteCurrentUser() {
+        if (User.currentUser.getRole().equals("base_user")) {
+            List<User> userList = getUserList();
+            userList.remove(User.currentUser);
+        } else if (User.currentUser.getRole().equals("admin")) {
+            System.out.print("Can't delete admin.");
+        }
+
+        System.out.println("User deleted successfully.");
+    }
+
+    public static void main(String[] args) {
+        new UserLogin();
     }
 }

@@ -19,6 +19,10 @@ public class Admin extends User {
         return "admin";
     }
 
+    public String getUsername() {
+        return super.username;
+    }
+
     public void editUserInfo(String username, String password, String name, String role) {
         this.username = username;
         this.password = password;
