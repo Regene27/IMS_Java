@@ -160,8 +160,9 @@ public class InventoryManagement {
         System.out.println("3. Remove Product");
         System.out.println("4. Add Stock");
         System.out.println("5. View Removed Products Report");
-        System.out.println("6. Remove User");
-        System.out.println("7. Exit");
+        System.out.println("6. Edit User Info");
+        System.out.println("7. Remove User");
+        System.out.println("8. Exit");
         System.out.print("Enter your choice: ");
     }
 
@@ -219,10 +220,13 @@ public class InventoryManagement {
                         break;
                     case 6:
                         clearConsole();
+                        UserLogin.editCurrentUserInfo();
+                    case 7:
+                        clearConsole();
                         Admin.removeUser();
                         System.out.println("=".repeat(100));
                         break;
-                    case 7:
+                    case 8:
                         clearConsole();
                         System.out.println("Exiting the Sale Order Management System.");
                         System.out.println("=".repeat(100));

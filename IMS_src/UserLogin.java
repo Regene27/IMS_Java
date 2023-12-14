@@ -115,13 +115,9 @@ public class UserLogin {
             System.out.println("Invalid username or password.");
             System.exit(0);
         }
-
-        editCurrentUserInfo();
-
-        scanner.close();
     }
 
-    public void editCurrentUserInfo() {
+    public static void editCurrentUserInfo() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("New username: ");
@@ -172,8 +168,6 @@ public class UserLogin {
         }
 
         System.out.println("User info updated successfully.");
-
-        scanner.close();
     }
 
     public void deleteCurrentUser() {
