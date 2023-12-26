@@ -1,6 +1,7 @@
 package IMS_src;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class InventoryManagement {
@@ -100,8 +101,10 @@ public class InventoryManagement {
                     SaleItem saleItem = new SaleItem(product.getName(), product.getPrice(), amountToSell);
                     saleItems.add(saleItem);
                     System.out.println(amountToSell + " " + product.getName() + " added.");
+                    System.out.println("=".repeat(100));
                 } else {
                     System.out.println("Invalid amount. Amount to add should be greater than or equal to 0.");
+                    System.out.println("=".repeat(100));
                 }
             } else {
                 System.out.println("Invalid product index.");
@@ -110,7 +113,8 @@ public class InventoryManagement {
 
         // Lambda Expression
         saleItems.forEach(item -> System.out
-                .println(item.getAmount() + " " + item.getName() + " - $" + item.getPrice() + " each"));
+                .println(item.getAmount() + " " + item.getName() + " - $" + item.getPrice() + " each" + " - Total: $"
+                        + item.getTotalPrice()));
 
         System.out.print("\nDo you want to confirm the sale? (yes/no): ");
         String confirm = scanner.next().toLowerCase();
@@ -126,6 +130,8 @@ public class InventoryManagement {
             saveInventoryData();
 
             displaySaleReport(saleItems);
+
+            saveReportToFile(saleItems);
 
         } else {
             System.out.println("Sale canceled. Inventory remains unchanged.");
@@ -144,7 +150,28 @@ public class InventoryManagement {
     private static void displaySaleReport(List<SaleItem> saleItems) {
         System.out.println("\nSale Report:");
         for (SaleItem item : saleItems) {
-            System.out.println(item.getAmount() + " " + item.getName() + " sold for $" + item.getTotalPrice());
+            System.out.println(
+                    item.getAmount() + " " + item.getName() + " - $" + item.getPrice() + " each" + " - Total: $"
+                            + item.getTotalPrice());
+        }
+    }
+
+    private static void saveReportToFile(List<SaleItem> saleItems) {
+        String folder = "receipts/";
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String fileName = folder + "SaleReport_" + timeStamp + ".txt";
+
+        // Exceptions
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            writer.write("Sale Report:\n");
+            for (SaleItem item : saleItems) {
+                writer.write(
+                        item.getAmount() + " " + item.getName() + " - $" + item.getPrice() + " each" + " - Total: $"
+                                + item.getTotalPrice() + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error saving sale report to file: " + e.getMessage());
         }
     }
 
@@ -177,7 +204,6 @@ public class InventoryManagement {
         } else {
             System.out.println("Invalid product index.");
         }
-        scanner.close();
     }
 
     public void addStock() {
@@ -205,7 +231,6 @@ public class InventoryManagement {
         } else {
             System.out.println("Invalid product index.");
         }
-        scanner.close();
     }
 
     // Exceptions
@@ -233,21 +258,22 @@ public class InventoryManagement {
         System.out.println("=".repeat(100));
         System.out.println("Sale Order Management System");
         System.out.println("1. List Products");
-        System.out.println("2. Add Product");
-        System.out.println("3. Remove Product");
-        System.out.println("4. Add Stock");
-        System.out.println("5. View Removed Products Report");
-        System.out.println("6. Edit User Info");
-        System.out.println("7. Remove User");
-        System.out.println("8. Exit");
+        System.out.println("2. Generate Sale Order");
+        System.out.println("3. Add Stock");
+        System.out.println("4. View Removed Products Report");
+        System.out.println("5. Edit User Info");
+        System.out.println("6. Exit\n");
+        if (User.getCurrentUser().getRole().equals("admin")) {
+            System.out.println("7. Add Product");
+            System.out.println("8. Remove Product");
+            System.out.println("9. Remove User\n");
+        }
         System.out.print("Enter your choice: ");
     }
 
     public static void main(String[] args) {
 
         InventoryManagement system = new InventoryManagement();
-
-        generateSaleOrder();
 
         new UserLogin();
         int choice = 0;
@@ -270,39 +296,50 @@ public class InventoryManagement {
                         break;
                     case 2:
                         clearConsole();
-                        System.out.print("Enter product name: ");
-                        String name = scanner.nextLine();
-                        System.out.print("Enter product price: ");
-                        double price = scanner.nextDouble();
-                        System.out.print("Enter product quantity: ");
-                        int quantity = scanner.nextInt();
-                        system.addProduct(name, price, quantity);
+                        generateSaleOrder();
                         System.out.println("=".repeat(100));
                         break;
+                    case 7:
+                        if (User.getCurrentUser().getRole().equals("admin")) {
+                            clearConsole();
+                            System.out.print("Enter product name: ");
+                            String name = scanner.nextLine();
+                            System.out.print("Enter product price: ");
+                            double price = scanner.nextDouble();
+                            System.out.print("Enter product quantity: ");
+                            int quantity = scanner.nextInt();
+                            system.addProduct(name, price, quantity);
+                            System.out.println("=".repeat(100));
+                            break;
+                        }
+                    case 8:
+                        if (User.getCurrentUser().getRole().equals("admin")) {
+                            clearConsole();
+                            system.removeProduct();
+                            System.out.println("=".repeat(100));
+                            break;
+                        }
                     case 3:
-                        clearConsole();
-                        system.removeProduct();
-                        System.out.println("=".repeat(100));
-                        break;
-                    case 4:
                         clearConsole();
                         system.addStock();
                         System.out.println("=".repeat(100));
                         break;
-                    case 5:
+                    case 4:
                         clearConsole();
                         system.displayRemovedProductsReport();
                         System.out.println("=".repeat(100));
                         break;
-                    case 6:
+                    case 5:
                         clearConsole();
                         UserLogin.editCurrentUserInfo();
-                    case 7:
-                        clearConsole();
-                        Admin.removeUser();
-                        System.out.println("=".repeat(100));
-                        break;
-                    case 8:
+                    case 9:
+                        if (User.getCurrentUser().getRole().equals("admin")) {
+                            clearConsole();
+                            Admin.removeUser();
+                            System.out.println("=".repeat(100));
+                            break;
+                        }
+                    case 6:
                         clearConsole();
                         System.out.println("Exiting the Sale Order Management System.");
                         System.out.println("=".repeat(100));

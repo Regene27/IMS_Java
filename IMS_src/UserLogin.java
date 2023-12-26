@@ -143,6 +143,7 @@ public class UserLogin {
             baseUser.setName(newName);
         }
 
+        // Exceptions
         try {
             File file = new File("authorized_users.txt");
             List<String> lines = new ArrayList<>();
