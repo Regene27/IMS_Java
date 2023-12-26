@@ -43,6 +43,7 @@ public class UserRegister {
             System.out.println("Your password is " + password);
             user = false;
 
+            // Exceptions
             try {
                 FileWriter fileWriter = new FileWriter(filePath, true);
                 fileWriter.write("\n" + WriteContent);
@@ -57,6 +58,7 @@ public class UserRegister {
     }
 
     private static boolean isUsernameExists(String username, String filePath) {
+        // Exceptions
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             String line;

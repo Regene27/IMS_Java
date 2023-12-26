@@ -6,21 +6,15 @@ import java.util.List;
 public class Admin extends User {
     protected String role;
 
-    public String getName() {
-        return name;
-    }
-
     public Admin(String username, String password, String name) {
         super(username, password, name, "admin");
         admins.add(this);
     }
 
+    // Overriding Method
+    @Override
     public String getRole() {
         return "admin";
-    }
-
-    public String getUsername() {
-        return super.username;
     }
 
     public void editUserInfo(String username, String password, String name, String role) {
@@ -31,12 +25,6 @@ public class Admin extends User {
     }
 
     public static void removeUser() {
-
-        // if (user.getRole().equals("base_user")) {
-        // System.out.println("You cannot remove users.");
-        // return;
-        // }
-
         BaseUser.displayUsers();
         System.out.print("Enter the username of the user you want to remove: ");
 
@@ -52,5 +40,9 @@ public class Admin extends User {
             BaseUser.remove(user);
             System.out.println("User removed successfully");
         }
+    }
+
+    public String toString() {
+        return "Username: " + this.username + "\nRole: " + this.role + "\nName: " + this.name;
     }
 }

@@ -15,16 +15,10 @@ public class BaseUser extends User {
         users.add(this); // Add the user to the list when created
     }
 
-    public String getName() {
-        return super.name;
-    }
-
+    // Overriding Method
+    @Override
     public String getRole() {
         return "base_user";
-    }
-
-    public String getUsername() {
-        return super.username;
     }
 
     public static void remove(User user) {
@@ -50,4 +44,7 @@ public class BaseUser extends User {
         }
     }
 
+    public String toString() {
+        return "Username: " + this.username + "\nRole: " + this.role + "\nName: " + this.name;
+    }
 }

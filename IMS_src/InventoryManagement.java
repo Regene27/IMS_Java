@@ -4,11 +4,11 @@ import java.io.*;
 import java.util.*;
 
 public class InventoryManagement {
-    private static final String FILE_PATH = "sale_order.txt";
+    private static final String FILE_PATH = "inventory.txt";
     private static final String REPORT_FILE_PATH = "sale_order_report.txt";
-    private List<Product> products;
-    private List<String> removedProductsReport;
-    private double totalPrice;
+    private static List<Product> products;
+    private static List<String> removedProductsReport;
+    private static double totalPrice;
 
     public InventoryManagement() {
         products = new ArrayList<>();
@@ -17,6 +17,7 @@ public class InventoryManagement {
         totalPrice = 0.0;
     }
 
+    // Exceptions
     public void loadInventoryData() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
@@ -34,7 +35,8 @@ public class InventoryManagement {
         }
     }
 
-    public void saveInventoryData() {
+    // Exceptions
+    public static void saveInventoryData() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Product product : products) {
                 writer.write(product.getName() + "," + product.getPrice() + "," + product.getQuantity() + "\n");
@@ -44,7 +46,7 @@ public class InventoryManagement {
         }
     }
 
-    public void displayProducts() {
+    public static void displayProducts() {
         if (products.size() == 0) {
             System.out.println("No product listed.");
         } else {
@@ -72,7 +74,81 @@ public class InventoryManagement {
         }
     }
 
-    public void addRemovedProductToReport(String productName, int amountRemoved, double price) {
+    public static void generateSaleOrder() {
+        Scanner scanner = new Scanner(System.in);
+
+        List<SaleItem> saleItems = new ArrayList<>();
+
+        displayProducts();
+
+        boolean continueSale = true;
+
+        while (continueSale) {
+            System.out.print("Enter the index of the product to sell (or -1 to finish): ");
+            int index = scanner.nextInt();
+
+            if (index == -1) {
+                continueSale = false;
+            } else if (index >= 1 && index <= products.size()) {
+                Product product = products.get(index - 1);
+                System.out.println("Selected Product: " + product);
+
+                System.out.print("Enter the amount to sell: ");
+                int amountToSell = scanner.nextInt();
+
+                if (amountToSell >= 0) {
+                    SaleItem saleItem = new SaleItem(product.getName(), product.getPrice(), amountToSell);
+                    saleItems.add(saleItem);
+                    System.out.println(amountToSell + " " + product.getName() + " added.");
+                } else {
+                    System.out.println("Invalid amount. Amount to add should be greater than or equal to 0.");
+                }
+            } else {
+                System.out.println("Invalid product index.");
+            }
+        }
+
+        // Lambda Expression
+        saleItems.forEach(item -> System.out
+                .println(item.getAmount() + " " + item.getName() + " - $" + item.getPrice() + " each"));
+
+        System.out.print("\nDo you want to confirm the sale? (yes/no): ");
+        String confirm = scanner.next().toLowerCase();
+
+        if (confirm.equals("yes")) {
+            for (SaleItem item : saleItems) {
+                Product product = findProductByName(item.getName());
+                if (product != null) {
+                    product.setQuantity(product.getQuantity() - item.getAmount());
+                }
+            }
+
+            saveInventoryData();
+
+            displaySaleReport(saleItems);
+
+        } else {
+            System.out.println("Sale canceled. Inventory remains unchanged.");
+        }
+    }
+
+    private static Product findProductByName(String productName) {
+        for (Product product : products) {
+            if (product.getName().equals(productName)) {
+                return product;
+            }
+        }
+        return null;
+    }
+
+    private static void displaySaleReport(List<SaleItem> saleItems) {
+        System.out.println("\nSale Report:");
+        for (SaleItem item : saleItems) {
+            System.out.println(item.getAmount() + " " + item.getName() + " sold for $" + item.getTotalPrice());
+        }
+    }
+
+    public static void addRemovedProductToReport(String productName, int amountRemoved, double price) {
         double removedTotalPrice = amountRemoved * price;
         removedProductsReport
                 .add(productName + " - Amount Sold: " + amountRemoved + " - Total Price: $" + removedTotalPrice);
@@ -132,6 +208,7 @@ public class InventoryManagement {
         scanner.close();
     }
 
+    // Exceptions
     public void saveReportToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(REPORT_FILE_PATH))) {
             writer.write("Removed Products Report:\n");
@@ -168,14 +245,13 @@ public class InventoryManagement {
 
     public static void main(String[] args) {
 
-        User user1 = new BaseUser("user1", "12345678", "User");
-        User user2 = new BaseUser("user2", "12345678", "User");
-        User admin = new Admin("admin", "12345678", "admin");
+        InventoryManagement system = new InventoryManagement();
+
+        generateSaleOrder();
 
         new UserLogin();
         int choice = 0;
 
-        InventoryManagement system = new InventoryManagement();
         Scanner scanner = new Scanner(System.in);
 
         do {
@@ -189,7 +265,7 @@ public class InventoryManagement {
                 switch (choice) {
                     case 1:
                         clearConsole();
-                        system.displayProducts();
+                        displayProducts();
                         System.out.println("=".repeat(100));
                         break;
                     case 2:

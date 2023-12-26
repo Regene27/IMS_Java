@@ -16,6 +16,7 @@ public class UserLogin {
     public static List<User> getUserList() {
         List<User> userList = new ArrayList<>();
 
+        // Exceptions
         try {
             File file = new File("authorized_users.txt");
             Scanner scanner = new Scanner(file);
@@ -48,6 +49,7 @@ public class UserLogin {
     public static List<Admin> getAdminList() {
         List<Admin> adminList = new ArrayList<>();
 
+        // Exceptions
         try {
             File file = new File("authorized_users.txt");
             Scanner scanner = new Scanner(file);

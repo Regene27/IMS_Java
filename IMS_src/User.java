@@ -19,11 +19,15 @@ public abstract class User {
         this.name = name;
     }
 
-    public abstract String getName();
-
     public abstract String getRole();
 
-    public abstract String getUsername();
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getName() {
+        return this.name;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -48,7 +52,6 @@ public abstract class User {
     public static void clearCurrentUser() {
         currentUser = null;
     }
-
 }
 
 // protected static boolean isAdmin() {
