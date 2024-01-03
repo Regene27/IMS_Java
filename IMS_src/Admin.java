@@ -24,7 +24,8 @@ public class Admin extends User {
         this.role = role;
     }
 
-    public static void removeUser() {
+    @Override
+    public void removeUser() {
         BaseUser.displayUsers();
         System.out.print("Enter the username of the user you want to remove: ");
 
@@ -37,7 +38,7 @@ public class Admin extends User {
             System.out.println("You cannot remove an admin");
             return;
         } else {
-            BaseUser.remove(user);
+            BaseUser.removeUser(user);
             System.out.println("User removed successfully");
         }
     }

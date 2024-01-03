@@ -40,7 +40,7 @@ public class InventoryManagement {
     public static void saveInventoryData() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Product product : products) {
-                writer.write(product.getName() + "," + product.getPrice() + "," + product.getQuantity() + "\n");
+                writer.write(product.getName() + "," + product.getPrice() + "," + product.getStock() + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -76,6 +76,11 @@ public class InventoryManagement {
     }
 
     public static void generateSaleOrder() {
+        class InsufficientStockException extends RuntimeException {
+            public InsufficientStockException(String message) {
+                super(message);
+            }
+        }
         Scanner scanner = new Scanner(System.in);
 
         List<SaleItem> saleItems = new ArrayList<>();
@@ -111,30 +116,41 @@ public class InventoryManagement {
             }
         }
 
-        // Lambda Expression
-        saleItems.forEach(item -> System.out
-                .println(item.getAmount() + " " + item.getName() + " - $" + item.getPrice() + " each" + " - Total: $"
-                        + item.getTotalPrice()));
+        try {
+            // Lambda Expression
+            saleItems.forEach(item -> System.out
+                    .println(
+                            item.getAmount() + " " + item.getName() + " - $" + item.getPrice() + " each" + " - Total: $"
+                                    + item.getTotalPrice()));
 
-        System.out.print("\nDo you want to confirm the sale? (yes/no): ");
-        String confirm = scanner.next().toLowerCase();
+            System.out.print("\nDo you want to confirm the sale? (yes/no): ");
+            String confirm = scanner.next().toLowerCase();
 
-        if (confirm.equals("yes")) {
-            for (SaleItem item : saleItems) {
-                Product product = findProductByName(item.getName());
-                if (product != null) {
-                    product.setQuantity(product.getQuantity() - item.getAmount());
+            if (confirm.equals("yes")) {
+                for (SaleItem item : saleItems) {
+
+                    Product product = findProductByName(item.getName());
+                    if (product != null) {
+                        if (product.getStock() < item.getAmount()) {
+                            throw new InsufficientStockException("Not enough stock for " + item.getName());
+                        }
+                        product.setStock(product.getStock() - item.getAmount());
+                    }
+
                 }
+
+                saveInventoryData();
+
+                displaySaleReport(saleItems);
+
+                saveReportToFile(saleItems);
+
+            } else {
+                System.out.println("Sale canceled. Inventory remains unchanged.");
             }
-
-            saveInventoryData();
-
-            displaySaleReport(saleItems);
-
-            saveReportToFile(saleItems);
-
-        } else {
-            System.out.println("Sale canceled. Inventory remains unchanged.");
+        } catch (InsufficientStockException e) {
+            System.out.println("Error: " + e.getMessage());
+            return;
         }
     }
 
@@ -221,7 +237,7 @@ public class InventoryManagement {
             int amountToAdd = scanner.nextInt();
 
             if (amountToAdd >= 0) {
-                product.setQuantity(product.getQuantity() + amountToAdd);
+                product.setStock(product.getStock() + amountToAdd);
                 saveInventoryData();
                 System.out.println(amountToAdd + " " + product.getName() + " added to stock.");
                 scanner.nextLine();
@@ -267,6 +283,9 @@ public class InventoryManagement {
             System.out.println("7. Add Product");
             System.out.println("8. Remove Product");
             System.out.println("9. Remove User\n");
+        }
+        if (User.getCurrentUser().getRole().equals("base_user")) {
+            System.out.println("9. Remove Current User\n");
         }
         System.out.print("Enter your choice: ");
     }
@@ -319,6 +338,21 @@ public class InventoryManagement {
                             System.out.println("=".repeat(100));
                             break;
                         }
+                    case 9:
+                        if (User.getCurrentUser().getRole().equals("admin")) {
+                            clearConsole();
+                            Admin admin = (Admin) Admin.getCurrentUser();
+                            admin.removeUser();
+                            System.out.println("=".repeat(100));
+                            break;
+                        }
+                        if (User.getCurrentUser().getRole().equals("base_user")) {
+                            clearConsole();
+                            BaseUser user = (BaseUser) BaseUser.getCurrentUser();
+                            user.removeUser();
+                            System.out.println("=".repeat(100));
+                            break;
+                        }
                     case 3:
                         clearConsole();
                         system.addStock();
@@ -332,13 +366,8 @@ public class InventoryManagement {
                     case 5:
                         clearConsole();
                         UserLogin.editCurrentUserInfo();
-                    case 9:
-                        if (User.getCurrentUser().getRole().equals("admin")) {
-                            clearConsole();
-                            Admin.removeUser();
-                            System.out.println("=".repeat(100));
-                            break;
-                        }
+                        System.out.println("=".repeat(100));
+                        break;
                     case 6:
                         clearConsole();
                         System.out.println("Exiting the Sale Order Management System.");

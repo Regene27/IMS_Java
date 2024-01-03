@@ -21,6 +21,8 @@ public abstract class User {
 
     public abstract String getRole();
 
+    protected abstract void removeUser();
+
     public String getUsername() {
         return this.username;
     }

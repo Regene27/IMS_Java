@@ -2,17 +2,18 @@ package IMS_src;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class BaseUser extends User {
     protected String role;
 
-    // users.add(this); // Add the user to the list when created
-    // }
-
     public BaseUser(String username, String password, String name) {
         super(username, password, name, "base_user");
-        users.add(this); // Add the user to the list when created
+        users.add(this);
     }
 
     // Overriding Method
@@ -21,8 +22,42 @@ public class BaseUser extends User {
         return "base_user";
     }
 
-    public static void remove(User user) {
+    @Override
+    public void removeUser() {
+        users.remove(this);
+        TextFileUtils.removeUserInfoFromFile("authorized_users.txt", this.getUsername());
+        System.out.println("User removed successfully");
+    }
+
+    public static void removeUser(User user) {
         User.users.remove(user);
+        TextFileUtils.removeUserInfoFromFile("authorized_users.txt", user.getUsername());
+    }
+
+    public class TextFileUtils {
+        public static void removeUserInfoFromFile(String filePath, String username) {
+            List<String> lines = new ArrayList<>();
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (!line.contains(username)) {
+                        lines.add(line);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                for (String line : lines) {
+                    writer.write(line);
+                    writer.newLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static User findUser(String username) {
@@ -46,5 +81,8 @@ public class BaseUser extends User {
 
     public String toString() {
         return "Username: " + this.username + "\nRole: " + this.role + "\nName: " + this.name;
+    }
+
+    public static void remove(User user) {
     }
 }

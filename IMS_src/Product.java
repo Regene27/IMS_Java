@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Product {
     private String name;
     protected double price;
-    private int quantity;
+    private int stock;
 
-    public Product(String name, double price, int quantity) {
+    public Product(String name, double price, int stock) {
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
+        this.stock = stock;
     }
 
     public Product(String name, double price) {
@@ -26,17 +26,17 @@ public class Product {
         return price;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getStock() {
+        return stock;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     @Override
     public String toString() {
-        return name + " - Price: $" + price + " - Quantity: " + quantity;
+        return name + " - Price: $" + price + " - Stock: " + stock;
     }
 
     @Override
