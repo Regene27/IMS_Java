@@ -17,8 +17,8 @@ The primary purpose of the Inventory Management System is to offer businesses a 
    - 2.2 [Constructor](#22-constructor)
    - 2.3 [Methods](#23-methods)
      
-3. [OOP-Concept](#object-oriented-concept)
-   - 3.1 [Class and Object](#1-class-and-object)
+3. [OOP-Concept](#object-oriented-concepts)
+   - 3.1 [Class and Object](#1-class-and-objects)
    - 3.2 [Inheritance](#2-inheritance)
    - 3.3 [Polymorphism](#3-polymorphism)
    - 3.4 [Encapsulation](#4-encapsulation)
