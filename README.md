@@ -1,67 +1,84 @@
-Inventory Management System
-“KIN Sosetha & LINE Regene”
+# Inventory Management System
+The Inventory Management System (IMS) is a robust software solution designed to streamline and optimize the processes involved in managing inventory, sales, and reporting. This project is hosted on GitHub to provide version control, collaboration, and transparency throughout its development.	
 
-Source Code:
-Features Concept:
+The primary purpose of the Inventory Management System is to offer businesses a comprehensive tool for efficiently handling their inventory-related operations. This includes tracking stock levels, managing products and sales and ensuring data accuracy.
+## Table of Content
+1. USER:
+   1.1 Field
+   1.2 Constructor
+   1.3 Method
+   1.4 Usage
+2. Product
+   2.1 Field
+   2.2 Methods
+   2.3 Usage
+3. OOP Concept
+   3.1 Class and Object
+   3.2 Inheritance
+   3.3 Polymorphism
+   3.4 Encapsulation
+   3.5 Abstraction
+   3.6 Exception Handling
+   3.7 File I/O
+   3.8 Lamda Expression
+   3.9 Static Method
 
-Features of the Inventory Management System:
+## USER
+  The User class is an abstract base class that represents users within the system. It provides a blueprint for both regular users and administrators.
+  ### 1.1 Field
+  * username, password, and name: Basic user information.
+  * currentUser: Reference to the currently logged-in user.
+  * users: List of all users.
+  * admins: List of administrator users.
+  ### 1.2 Constructor
+  *username: The username of the user being created.
+  *password: The password of the user.
+  *name: The name of the user.
+  *string: A parameter that is not used within the constructor or its parent class.
+  ### 1.3 Methods
+  * getRole(): An abstract method that must be implemented by subclasses to return the role of the user.
+  * removeUser(): An abstract method to be implemented by subclasses for removing a user.
+  * getUsername(), getName(): Getter methods for the username and name, respectively.
+  * setUsername(), setPassword(), setName(): Setter methods for updating user information.
+  * getCurrentUser(), setCurrentUser(), clearCurrentUser(): Methods for managing the currently logged-in user.
+  ### 1.4 Usage
+  
+## Product
+### 2.1 Field
+* name: the name of the product. It is of type String.
+* price: the price of the product. It is of type double.
+* stock: the quantity of the product in stock. It is of type int.
+### 2.2 Methods
+### a. accessor methods
+* getName(): Returns the name of the product.
+* getPrice(): Returns the price of the product.
+* getStock(): Returns the current stock quantity of the products,\.
+### b. Overriding Methods
+* toString(): Provides a formatted string representation of the product, including name, price, and stock.
+* equals(Object obj): Compares two products for equality based on their names.
+* hashCode(): Generates a hash code for the product based on its name.
+### 2.3 Usages
 
-User Authentication: (Available)
+## Object Oriented Concepts
+### 1. Class and Objects
+* Super Class User. Subclass: BaseUser and Admin
+* Super Class Products. Subclass: SaleItem
+* Inventory Management System
+### 2. Inheritance
+* Overloading Methods
+  
 
-- File containing authorized users information
-- Checking authorization by comparing inputted information with file information
-- If authorized, user is let into system; otherwise, quit program
+* Overriding Methods
+### 3. Polymorphism
+### 4. Encapsulation
+### 5. Abstraction
+### 6. Exception Handling
+### 7. File I/O
+### 8. Lamda Expression
+### 9. Static Methods
 
-Product: (Available)
 
-- Add new product
-- Edit product information (name, quantity, price)
-- Remove product
 
-Receipt/Invoice: (Available)
 
-- Datetime issued
-- Amounts of each product sold + price
-- Total price
+     
 
-Report:
-
-- Date issued
-- All receipt_ids in a set amount of time (weekly, biweekly, monthly, quarterly, semester, yearly)
-- Total Price
-
-Project Report Sample:
-
-Introduction:
-
-- Our project is about an Inventory Management System with the purpose of tracking product inventory and generating and keeping track of all transactions made.
-
-Detail:
-
-- The functions of the system:
-- User authentication
-- View products
-- Add product
-- Edit product information (name, price, quantity, etc)
-- Delete product
-- Add product inventory/stocks
-- Generate invoices/receipts
-- Generate reports based on time (day, month, year, etc)
-- View product categories
-
-Implementation:
-
-Class
-
-- Field: what is it used for?
-- User: user_id, username, passwords, name.
-- Product: product_id, name, description, price, quantity
-- Receipt: reciepe_id, user_id, prod_id, prod_quan, prod_price, total price.
-- Report: report_id, reciepe_id, total_price, date.
-
-Method: What does it do?
-
-- User: getName, getUsername, getPassword, setName, setUsername, setPassword
-- Product: getName, getPrice, getQuantity, setName, setPrice, setQuantity, addProduct, removeProduct
-- Receipt: setProductQuantity, getProduct_ID, getUser_ID, getProductPrice, getTotalPrice
-- Report: getReceiptID, getDate, getTotalPrice
