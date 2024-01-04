@@ -8,14 +8,15 @@ The primary purpose of the Inventory Management System is to offer businesses a 
 ## Table of Content
 
 1. [USER](#user)
-   - 1.1 [Field](#field)
-   - 1.2 [Constructor](#constructor)
-   - 1.3 [Method](#method)
+   - 1.1 [Field](#11-field)
+   - 1.2 [Constructor](#12-constructor)
+   - 1.3 [Method](#13-method)
    
 2. [Product](#product)
-   - 2.1 [Field](#field)
-   - 2.2 [Methods](#methods)
-   - 
+   - 2.1 [Field](#21-field)
+   - 2.2 [Constructor](#22-constructor)
+   - 2.3 [Methods](#23-methods)
+     
 3. [OOP-Concept](#oop-concept)
    - 3.1 [Class and Object](#class-and-object)
    - 3.2 [Inheritance](#inheritance)
