@@ -1,8 +1,12 @@
 # Inventory Management System
+
 The Inventory Management System (IMS) is a robust software solution designed to streamline and optimize the processes involved in managing inventory, sales, and reporting. This project is hosted on GitHub to provide version control, collaboration, and transparency throughout its development.	
 
 The primary purpose of the Inventory Management System is to offer businesses a comprehensive tool for efficiently handling their inventory-related operations. This includes tracking stock levels, managing products and sales and ensuring data accuracy.
+
+
 ## Table of Content
+
 1. [USER](#user)
    - 1.1 [Field](#field)
    - 1.2 [Constructor](#constructor)
