@@ -3,25 +3,25 @@ The Inventory Management System (IMS) is a robust software solution designed to 
 
 The primary purpose of the Inventory Management System is to offer businesses a comprehensive tool for efficiently handling their inventory-related operations. This includes tracking stock levels, managing products and sales and ensuring data accuracy.
 ## Table of Content
-1. USER:
-   1.1 Field
-   1.2 Constructor
-   1.3 Method
-   1.4 Usage
-2. Product
-   2.1 Field
-   2.2 Methods
-   2.3 Usage
-3. OOP Concept
-   3.1 Class and Object
-   3.2 Inheritance
-   3.3 Polymorphism
-   3.4 Encapsulation
-   3.5 Abstraction
-   3.6 Exception Handling
-   3.7 File I/O
-   3.8 Lamda Expression
-   3.9 Static Method
+1. [USER](#user)
+   - 1.1 [Field](#field)
+   - 1.2 [Constructor](#constructor)
+   - 1.3 [Method](#method)
+   - 1.4 [Usage](#usage)
+2. [Product](#product)
+   - 2.1 [Field](#field)
+   - 2.2 [Methods](#methods)
+   - 2.3 [Usage](#usage)
+3. [OOP-Concept](#oop-concept)
+   - 3.1 [Class and Object] (#class-and-object)
+   - 3.2 [Inheritance](#inheritance)
+   - 3.3 [Polymorphism](#polymorphism)
+   - 3.4 [Encapsulation](#encapsulation)
+   - 3.5 [Abstraction](#abstraction)
+   - 3.6 [Exception Handling](#exception-handling)
+   - 3.7 [File I/O](#file-I/O)
+   - 3.8 [Lamda Expression](#lamda-expression)
+   - 3.9 [Static Method](#static-methods)
 
 ## USER
   The User class is an abstract base class that represents users within the system. It provides a blueprint for both regular users and administrators.
