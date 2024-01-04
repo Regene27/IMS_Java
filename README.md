@@ -18,15 +18,15 @@ The primary purpose of the Inventory Management System is to offer businesses a 
    - 2.3 [Methods](#23-methods)
      
 3. [OOP-Concept](#object-oriented-concept)
-   - 3.1 [Class and Object](#class-and-object)
-   - 3.2 [Inheritance](#inheritance)
-   - 3.3 [Polymorphism](#polymorphism)
-   - 3.4 [Encapsulation](#encapsulation)
-   - 3.5 [Abstraction](#abstraction)
-   - 3.6 [Exception Handling](#exception-handling)
-   - 3.7 [File I/O](#file-I/O)
-   - 3.8 [Lamda Expression](#lamda-expression)
-   - 3.9 [Static Method](#static-methods)
+   - 3.1 [Class and Object](#31-class-and-object)
+   - 3.2 [Inheritance](#32-inheritance)
+   - 3.3 [Polymorphism](#33-polymorphism)
+   - 3.4 [Encapsulation](#34-encapsulation)
+   - 3.5 [Abstraction](#35-abstraction)
+   - 3.6 [Exception Handling](#36-exception-handling)
+   - 3.7 [File I/O](#37-file-I/O)
+   - 3.8 [Lamda Expression](#38-lamda-expression)
+   - 3.9 [Static Method](#39static-methods)
 
 ## USER
   The User class is an abstract base class that represents users within the system. It provides a blueprint for both regular users and administrators.
