@@ -334,6 +334,9 @@ java
 ### 6. Exception Handling
 
 #### Error Handling for when Sale Order amount is larger than Inventory Stock
+In this context, exception handling is used to manage a potential InsufficientStockException.
+The try block contains the code that may potentially throw an exception. It involves processing sale items, checking stock availability, and updating the inventory. Inside the try block, if the stock for a particular product is insufficient (product.getStock() < item.getAmount()), an InsufficientStockException is thrown. This is done using the throw new InsufficientStockException("Not enough stock for " + item.getName()); statement. The catch block immediately follows the try block and specifies how to handle the exception if it occurs. In this case, it catches an InsufficientStockException. If an InsufficientStockException is caught, the catch block executes, printing an error message (System.out.println("Error: " + e.getMessage());). Additionally, the return; statement indicates that the method should exit after handling the exception.
+
 
 ```java
        try {
@@ -375,6 +378,11 @@ java
 ```
 
 #### IOException Handling for when Sale Order reciept/report not saved
+
+In this case, exception handling is used to manage potential IOExceptions that might occur during file operations.
+
+Inside the try block, a BufferedWriter is created to write data to a file (new BufferedWriter(new FileWriter(fileName))). The code then writes the sale report data to the file within the same try block. If an IOException occurs during the file-writing process, the catch block is executed. The catch block prints the stack trace (e.printStackTrace()) and displays an error message (System.err.println("Error saving sale report to file: " + e.getMessage());).
+
 ```java
      private static void saveReportToFile(List<SaleItem> saleItems) {
         String folder = "receipts/";
