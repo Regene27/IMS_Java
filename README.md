@@ -222,12 +222,6 @@ In this case, by overloading the removeUser method, the code becomes more readab
   
 - #### Overriding Methods
 
-##### User Class
-     
- ```java
-    protected abstract void removeUser();
-```
-
 ##### Admin Class
 removeUser method is part of a subclass that extends another class named BaseUser. By using @Override, the code is indicating that this method is intended to override a method with the same signature in the superclass. If there is no such method in the superclass, or if the signature doesn't match, the compiler will raise an error.
 
@@ -266,32 +260,16 @@ The @Override annotation is used to declare and enforce that the removeUser meth
   
 ### 3. Polymorphism
 
-In this case, we use toString method to obtain a string representation of an object. When we override the toString method in a class, we provide a custom implementation of how the object should be represented as a string.
+#### Casting
+
+* We create admin and base_user as normal user first, then cast it into each role that we want the user to have. 
 
 ```java
-    public String toString() {
-        return "Username: " + this.username + "\nRole: " + this.role + "\nName: " + this.name;
-    }
+   User admin = new Admin(username, password, name);
+   adminList.add((Admin) admin);
 ```
 
-```java
-    public String toString() {
-        return name + " - Price: $" + price + " - Stock: " + stock;
-    }
-```
-
-The method uses accessor methods (getName(), getPrice(), getTotalPrice()) to retrieve the values of instance variables (name, price, quantity) rather than accessing them directly.
-The use of accessor methods implies that these methods could be overridden by subclasses. If getName(), getPrice(), or getTotalPrice() are methods declared in a superclass and overridden in subclasses, then polymorphism could come into play when calling these methods on objects of the superclass or its subclasses.
-
-```java
-    public String toString() {
-        return "Product{" +
-                "name='" + getName() + '\'' +
-                ", price=" + getPrice() +
-                ", quantity=" + quantity +
-                ", total price=" + getTotalPrice() + "}";
-    }
-```
+* We need to cast the user into Admin to add the user into Admin list because since we have two array lists of users, which is normal users list(base_user) and admin list.
 
 ### 4. Encapsulation
 * In Product, we use private and protected as the encapsulation. the use of "private"and "protected" access modifiers in Product class exemplifies encapsulation by controlling the visibility and access to the internal state of the class. This ensures that the class's internal details are hidden, providing a clean and well-defined interface for interacting with objects of the Product class.
@@ -312,6 +290,22 @@ The use of accessor methods implies that these methods could be overridden by su
     protected String role;
 ```
 
+* In Product class, we have methods that are set to public, because we want to access it from other classes. We want to access the name, price, and stocks of each product from everywhere.
+
+```java
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+```
+
 ### 5. Abstraction
 Abstract class is a class that cannot be instantiated on its own; it is meant to be subclassed by concrete (non-abstract) classes.
 
@@ -319,16 +313,15 @@ In this case, Abstraction is about defining a common interface and hiding the im
 
 The getRole() and removeUser() methods are declared as abstract methods in the User class. Abstract methods are methods that are declared without an implementation in the abstract class and must be implemented by any concrete subclass.
 
-
-java
-
-
 ```java
     public abstract class User {
-       public abstract String getRole();
-   
-       protected abstract void removeUser();
     }
+```
+
+```java
+    public abstract String getRole();
+   
+    protected abstract void removeUser();
 ```
 
 ### 6. Exception Handling
