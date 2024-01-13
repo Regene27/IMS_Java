@@ -203,9 +203,11 @@ Inheritance is used to create a hierarchy of classes. In this Inventory manageme
 * Product that extended to SaleItem as its subclass. We use inheritance because we want to avoid long line of code and only focus on the specified information in SaleItem.
 
 - #### Overloading Methods
+Method overloading allows you to define multiple methods with the same name but different parameter types.
+In this case, by overloading the removeUser method, the code becomes more readable and self-explanatory. The parameter-less users.remove(this) is used when we want to remove the current user. While, User.users.remove(user) is used to remove some specific users.
 
 ```java
-    @Override
+    
     public void removeUser() {
         users.remove(this);
         TextFileUtils.removeUserInfoFromFile("authorized_users.txt", this.getUsername());
@@ -227,6 +229,7 @@ Inheritance is used to create a hierarchy of classes. In this Inventory manageme
 ```
 
 ##### Admin Class
+removeUser method is part of a subclass that extends another class named BaseUser. By using @Override, the code is indicating that this method is intended to override a method with the same signature in the superclass. If there is no such method in the superclass, or if the signature doesn't match, the compiler will raise an error.
 
 ```java
     @Override
@@ -250,6 +253,7 @@ Inheritance is used to create a hierarchy of classes. In this Inventory manageme
 ```
 
 ##### BaseUser Class
+The @Override annotation is used to declare and enforce that the removeUser method in the current class is intended to override a method in a superclass or implement a method from an interface. This practice helps improve code quality, maintainability, and reduces the likelihood of accidental errors.
 
 ```java
     @Override
@@ -262,6 +266,8 @@ Inheritance is used to create a hierarchy of classes. In this Inventory manageme
   
 ### 3. Polymorphism
 
+In this case, we use toString method to obtain a string representation of an object. When we override the toString method in a class, we provide a custom implementation of how the object should be represented as a string.
+
 ```java
     public String toString() {
         return "Username: " + this.username + "\nRole: " + this.role + "\nName: " + this.name;
@@ -273,6 +279,9 @@ Inheritance is used to create a hierarchy of classes. In this Inventory manageme
         return name + " - Price: $" + price + " - Stock: " + stock;
     }
 ```
+
+The method uses accessor methods (getName(), getPrice(), getTotalPrice()) to retrieve the values of instance variables (name, price, quantity) rather than accessing them directly.
+The use of accessor methods implies that these methods could be overridden by subclasses. If getName(), getPrice(), or getTotalPrice() are methods declared in a superclass and overridden in subclasses, then polymorphism could come into play when calling these methods on objects of the superclass or its subclasses.
 
 ```java
     public String toString() {
