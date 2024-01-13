@@ -285,12 +285,16 @@ Inheritance is used to create a hierarchy of classes. In this Inventory manageme
 ```
 
 ### 4. Encapsulation
+* In Product, we use private and protected as the encapsulation. the use of "private"and "protected" access modifiers in Product class exemplifies encapsulation by controlling the visibility and access to the internal state of the class. This ensures that the class's internal details are hidden, providing a clean and well-defined interface for interacting with objects of the Product class.
 
 ```java
     private String name;
     protected double price;
     private int stock;
 ```
+
+* In User class, all the attributes (username, password, name) are declared as protected, making them accessible to both the class itself and its subclasses. The use of protected allows subclasses (like Admin class) to inherit and access these attributes. The protected modifier provides a level of encapsulation, allowing subclasses to work with these variables while still controlling access from classes outside the package. Also, This promotes a modular and organized design, making it easier to understand and maintain the code.
+
 
  ```java
     protected String username;
@@ -300,6 +304,15 @@ Inheritance is used to create a hierarchy of classes. In this Inventory manageme
 ```
 
 ### 5. Abstraction
+Abstract class is a class that cannot be instantiated on its own; it is meant to be subclassed by concrete (non-abstract) classes.
+
+In this case, Abstraction is about defining a common interface and hiding the implementation details. The User class provides a blueprint for creating various types of users (which can be concrete subclasses), and it enforces that each subclass must implement certain methods. This helps in creating a hierarchy of classes that share common characteristics while allowing for specific implementations in each subclass.
+
+The getRole() and removeUser() methods are declared as abstract methods in the User class. Abstract methods are methods that are declared without an implementation in the abstract class and must be implemented by any concrete subclass.
+
+
+java
+
 
 ```java
     public abstract class User {
@@ -386,11 +399,20 @@ Inheritance is used to create a hierarchy of classes. In this Inventory manageme
   In receipts folder, contains each sale order receipt/report with the datetime when issued.
   
 ### 8. Lamda Expression and Inner Class
+- #### Lamda Expression
+Lambda expressions are used in conjunction with the forEach method to iterate over a collection of SaleItem objects (saleItems) and specify the behavior for each element, resulting in more readable and expressive code.
+
+The lambda expression is used within the forEach method to iterate over each element (item) in the saleItems collection. The lambda body contains a code block ({ ... }) that defines the actions to be performed for each SaleItem. The code block prints details such as the quantity, name, price per unit, and total price for each SaleItem to the console.
 
 ```java
     saleItems.forEach(item -> System.out.println(item.getAmount() + " " + item.getName() + " - $" + item.getPrice()
              + " each" + " - Total: $"+ item.getTotalPrice()));
 ```
+- #### Inner Class
+In this case, inner class is used to allows for better encapsulation of the exception and ties it closely to the logic of the generateSaleOrder method. It can enhance code organization and readability while limiting the visibility of the exception to the specific context where it is relevant.  
+
+In Inventory Management System, an instance of InsufficientStockException can be created when an insufficient stock condition is detected during the sale order generation process.
+Inner classes have access to the members of the enclosing class. If needed, InsufficientStockException can access methods or fields of the InventoryManagementSystem class. This allows InsufficientStockException to access private fields or methods of InventoryManagementSystem if required.
 
 ```java
     public class InventoryManagementSystem {
