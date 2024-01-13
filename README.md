@@ -428,6 +428,11 @@ Inner classes have access to the members of the enclosing class. If needed, Insu
 
 ### 9. Static Methods
 
+Static method allows for the encapsulation of utility functionality related to saving inventory data. It provides a convenient way to perform operations without requiring the instantiation of an object.
+
+In this case, since the method is static, it can be called using the class name, without creating an instance of the class. Also, it performs file I/O operations to save the inventory data. It uses a try-with-resources statement to automatically close the BufferedWriter when the try block is exited.
+
+
 ```java
     public static void saveInventoryData() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
