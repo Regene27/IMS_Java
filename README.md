@@ -198,6 +198,9 @@ The product class is a superclass used to store all types of products in the inv
 - #### Inventory Management System
   
 ### 2. Inheritance
+Inheritance is used to create a hierarchy of classes. In this Inventory management system, there are two superclasses:
+* User extended to subclasses which are BaseUser and Admin. We use inheritance in this case because both Admin and BaseUser store the informations as in Users but they also have their own attributes. Therefore, we want to specified its own attribute in subclasses. It is also useful for code struture and reducability. 
+* Product that extended to SaleItem as its subclass. We use inheritance because we want to avoid long line of code and only focus on the specified information in SaleItem.
 
 - #### Overloading Methods
 
